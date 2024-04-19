@@ -5,20 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserDetails extends Model
+class Appointments extends Model
 {
     use HasFactory;
-
-    //these are fillable input
-    protected $table = "user_details";
+    protected $table = "appointments";
     protected $fillable = [
         'user_id',
-        'bio_data',
-        'fav',
+        'doc_id',
+        'date',
+        'day',
+        'time',
         'status',
     ];
 
-    //state this is belong to user table
     public function user(){
         return $this->belongsTo(User::class);
     }

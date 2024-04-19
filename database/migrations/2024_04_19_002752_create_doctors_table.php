@@ -16,13 +16,12 @@ return new class extends Migration
         // doctors table refers to user table
         Schema::create('doctors', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('doc_id')->unique();
+            $table->unsignedInteger('doc_id')->unique();
             $table->string('category')->nullable();
-            $table->unsignedBigInteger('patients')->nullable();
-            $table->unsignedBigInteger('experience')->nullable();
+            $table->unsignedInteger('patients')->nullable();
+            $table->unsignedInteger('experience')->nullable();
             $table->longText('bio_data')->nullable();
             $table->string('status')->nullable();
-            // state doc_id refers to user_table
             $table->foreign('doc_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 
-// register user / doctors 
-
+//this is to register new user/doctor
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -20,9 +19,10 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Validate and create a newly registered user.
      *
-     * @param  array<string, string>  $input
+     * @param  array  $input
+     * @return \App\Models\User
      */
-    public function create(array $input): User
+    public function create(array $input)
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
@@ -34,23 +34,15 @@ class CreateNewUser implements CreatesNewUsers
         $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
-            'type' => $input['type'], // type this store for [user/doctors]
+            'type' => 'doctor',
             'password' => Hash::make($input['password']),
         ]);
 
-        if($input['type'] == 'doctor'){
-           $doctorInfo = Doctor::create([
-            'doc_id' => $user->id, 
-            'status' => 'active,'
-           ]);
-        } else if($input['type'] == 'user'){
-            $userInfo = UserDetails::create([
-                'user_id' => $user->id, 
-                'status' => 'active,'
-            ]);
-        }
+        $doctorInfo = Doctor::create([
+            'doc_id' => $user->id,
+            'status' => 'active'
+        ]);
 
-        // 
         return $user;
     }
 }

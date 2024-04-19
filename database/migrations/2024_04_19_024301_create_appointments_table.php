@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        // strore their details
-        Schema::create('user_details', function (Blueprint $table) {
+        Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id')->unique();
-            $table->longText('bio_data')->nullable();
-            $table->string('status')->nullable();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('doc_id');
+            $table->string('date');
+            $table->string('day');
+            $table->string('time');
+            $table->string('status');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_details');
+        Schema::dropIfExists('appointments');
     }
 };
